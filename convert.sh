@@ -2,11 +2,17 @@
 
 echo "Converting .png to .webp"
 
-for folder in cover project team
+mkdir -p output/cover output/project output/team
+
+for folder in cover project team .
 do
     for file in $folder/*.png
     do
-        cwebp -q 80 $file -o ${file%.*}.webp
+        # Extract the filename without the directory
+        filename=$(basename "$file")
+        # Convert and save the output in the corresponding output directory
+        cwebp -q 60 "$file" -o "output/$folder/${filename%.*}.webp"
+        convert -quality 60 "$file" "output/$folder/${filename%.*}.jpg"
     done
 done
 
