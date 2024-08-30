@@ -7,9 +7,8 @@ RUN apt-get update && apt-get install -y webp imagemagick
 
 RUN sh ./convert.sh
 
-FROM nginx:alpine
+FROM flashspys/nginx-static:latest
 
-RUN rm -rf /usr/share/nginx/html/*
-COPY --from=builder /processing/output /usr/share/nginx/html
+COPY --from=builder /processing/output /static
 
 LABEL org.opencontainers.image.source=https://github.com/krisamin/portfolio-assets
