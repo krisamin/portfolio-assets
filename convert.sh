@@ -11,6 +11,7 @@ do
         # Extract the filename without the directory
         filename=$(basename "$file")
         # Convert and save the output in the corresponding output directory
+        cp "$file" "output/$folder/$filename"
         cwebp -q 60 "$file" -o "output/$folder/${filename%.*}.webp"
         convert -quality 60 "$file" "output/$folder/${filename%.*}.jpg"
     done
