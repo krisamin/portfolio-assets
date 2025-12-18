@@ -1,19 +1,19 @@
 #!/bin/bash
 
-echo "Converting .png to .webp"
+mkdir -p docs/cover docs/project docs/team
 
-mkdir -p output/cover output/project output/team
-
-for folder in cover project team .
+for folder in cover project team
 do
-    for file in $folder/*.png
+    for file in original/$folder/*.png
     do
-        # Extract the filename without the directory
+        [ -e "$file" ] || continue
+
         filename=$(basename "$file")
-        # Convert and save the output in the corresponding output directory
-        cp "$file" "output/$folder/$filename"
-        cwebp -q 60 "$file" -o "output/$folder/${filename%.*}.webp"
-        convert -quality 60 "$file" "output/$folder/${filename%.*}.jpg"
+        name="${filename%.*}"
+
+        cp "$file" "docs/$folder/$filename"
+        cwebp -q 60 "$file" -o "docs/$folder/$name.webp"
+        convert -quality 60 "$file" "docs/$folder/$name.jpg"
     done
 done
 
